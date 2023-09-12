@@ -5,7 +5,6 @@ import * as fs from 'node:fs/promises';
 import hash from 'object-hash';
 import OpenAI from 'openai';
 import { hasOwn } from 'openai/core.js';
-import { preprocess } from './preprocess.js';
 
 const main = async () => {
 
@@ -40,7 +39,8 @@ const main = async () => {
   const promptPromises = promptFiles.map(async (file) => {
     const module = await import(`./prompt/${file}`);
     const prompt = module.prompt;
-    promptSet.push({ title: file, ...prompt });
+    const preprocessor = module.preprocessor;
+    promptSet.push({ title: file, preprocessor, ...prompt });
   });
 
   // 파일 로드처리
@@ -59,16 +59,13 @@ const main = async () => {
   await Promise.all(promptPromises);
   console.log('loaded prompt count:', promptSet.length);
 
-  //* 데이터 셋 전처리
-  const dataSet = preprocess(rawDataSet);
-  console.log('data preprocessed.');
-
   //* GPT 실행
   // data와 prompt 결합하여 입력 파라미터 생성
   const jobs = [];
   for (let prompt of promptSet) {
+    const { title, preprocessor, ...inputPrompt } = prompt;
+    const dataSet = preprocessor(rawDataSet);
     for (let data of dataSet) {
-      const { title, ...inputPrompt } = prompt;
       const param = {
         ...inputPrompt,
         input: data,
@@ -138,46 +135,14 @@ const main = async () => {
           { role: 'user', content: input },
         ],
         ...params,
-        functions: [
-          {
-            name: 'insertMetadata',
-            description: 'Inserts summary and hashtags into the article metadata',
-            parameters: {
-              type: 'object',
-              properties: {
-                oneLineSummary: {
-                  type: 'string',
-                  description:
-                    'a concise summary of the entire document within one sentence',
-                },
-                summary: {
-                  type: 'string',
-                  description:
-                    'concise, one-paragraph or less summary of the entire document',
-                },
-                hashtags: {
-                  type: 'array',
-                  items: {
-                    type: 'string',
-                  },
-                  description: 'A list of hashtags for the article',
-                },
-              },
-              required: ['oneLineSummary', 'summary', 'hashtags'],
-            },
-          },
-        ],
-        function_call: {
-          name: 'insertMetadata',
-        },
       });
 
       results[index] = JSON.parse(result.choices[0].message.function_call.arguments);
     });
 
     console.log('start requesting jobs...');
-
     await Promise.all(gptPromises);
+    console.log('requested jobs done.');
   };
 
   // GPT 실행 결과 캐시에 저장
@@ -191,44 +156,47 @@ const main = async () => {
   //* 실행 결과 검사 (함수 호출 형식, 언어 한국어인지)
   const checker = (result) => {
     if (typeof result !== 'object') {
-      return 'ERR!!';
+      return { reuslt: 'ERR!!', message: '반환값이 object가 아닙니다.' };
     }
 
     //result는 { oneLineSummary, summary, hashtags } 형식
     if (!hasOwn(result, 'oneLineSummary') || !hasOwn(result, 'summary') || !hasOwn(result, 'hashtags')) {
-      return 'ERR!!';
+      return { result: 'ERR!!', message: '반환값이 { oneLineSummary, summary, hashtags } 형식이 아닙니다.' };
     }
 
     const { oneLineSummary, summary, hashtags } = result;
     if (typeof summary !== 'string' || typeof oneLineSummary !== 'string') {
-      return 'ERROR';
+      return { result: 'ERR!!', message: '한 줄 요약 또는 요약이 string 형식이 아닙니다.' };
     }
     if (!Array.isArray(hashtags)) {
-      return 'ERROR';
+      return { result: 'ERR!!', message: '해시태그 목록이 Array 형식이 아닙니다.' };
     }
     if (hashtags.some((hashtag) => typeof hashtag !== 'string')) {
-      return 'ERROR';
+      return { result: 'ERR!!', message: '개별 해시태그가 string 형식이 아닙니다.' };
     }
 
+    // 한 줄 요약 길이 검사
     if (oneLineSummary.length > 100) {
-      return 'WARN?';
+      return { result: 'WARN?', message: '한 줄 요약이 100자를 초과합니다.' };
     }
 
+    // 요약 길이 검사
     if (summary.length > 1000) {
-      return 'WARN?';
+      return { result: 'WARN?', message: '요약이 1000자를 초과합니다.' };
     }
 
+    // 해시태그 개수 검사
     if (hashtags.length > 10) {
-      return 'WARN?';
+      return { result: 'WARN?', message: '해시태그가 10개를 초과합니다.' };
     }
 
     //한글 포함 여부 검사
     const koreanRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     if (!koreanRegex.test(oneLineSummary) || !koreanRegex.test(summary)) {
-      return 'WARN?';
+      return { result: 'WARN?', message: '요약 또는 한 줄 요약에 한글이 포함되어 있지 않습니다.' };
     }
 
-    return 'PASS~';
+  return { result: 'PASS~', message: '검사를 통과했습니다.' };
   };
 
   //* 결과 보고서 생성
@@ -236,13 +204,13 @@ const main = async () => {
   const reportWidth = width - 3 - 5 - 4 - 20 - 10 - 25 - 5;
   const oneLineSummaryWidth = Math.floor(reportWidth * 0.3);
   const summaryWidth = Math.floor(reportWidth * 0.5);
-  const hashtagsWidth = Math.floor(reportWidth * 0.2);
+  const hashtagsWidth = Math.floor(reportWidth * 0.1);
   const p = new Table({
     title: 'Report',
     rowSeparator: true,
     columns: [
       { name: 'index', alignment: 'center', maxLen: 3, color: 'gray' },
-      { name: 'check', alignment: 'center', maxLen: 5, color: 'gray' },
+      { name: 'check', alignment: 'center', maxLen: 5 },
       { name: 'type', alignment: 'center', maxLen: 4, color: 'blue' },
       { name: 'title', alignment: 'left', maxLen: 20, color: 'magenta' },
       { name: 'prompt', alignment: 'left', maxLen: 10, color: 'cyan' },
@@ -256,31 +224,25 @@ const main = async () => {
   const counter = {};
 
   results.forEach((result, index) => {
-    const { title, type, _ } = rawDataSet.find((data) => {
-      const { title, ...dataSet } = data;
-      const { input, ...job } = jobs[index];
-      return hash(preprocess([dataSet])[0]) === hash(input);
-    });
-
-    const promptTitle = promptSet.find((prompt) => {
-      const { title, ...promptData } = prompt;
-      const { input, ...jobPrompt } = jobs[index];
-      return hash(promptData) === hash(jobPrompt);
-    }).title;
+    const { title, type, _ } = rawDataSet[index % rawDataSet.length];
+    const promptTitle = promptSet[Math.floor(index / rawDataSet.length)].title;
     const { oneLineSummary, summary, hashtags } = result;
 
-    counter[promptTitle] = counter[promptTitle] || { pass: 0, warn: 0, error: 0 };
+    counter[promptTitle] = counter[promptTitle] || { pass: 0, warn: 0, error: 0, warnList: [], errorList: [] };
 
     let check;
-    if (checker(result) === 'PASS~') {
-      check = chalk.green.bold(checker(result));
+    const checkResult = checker(result);
+    if (checkResult.result === 'PASS~') {
+      check = chalk.green.bold('PASS~');
       counter[promptTitle].pass++;
-    } else if (checker(result) === 'ERR!!') {
-      check = chalk.red.bold(checker(result));
+    } else if (checkResult.result === 'ERR!!') {
+      check = chalk.red.bold('ERR!!');
       counter[promptTitle].error++;
-    } else if (checker(result) === 'WARN?') {
-      check = chalk.yellow.bold(checker(result));
+      counter[promptTitle].errorList.push({ index, type, title, message: checkResult.message });
+    } else if (checkResult.result === 'WARN?') {
+      check = chalk.yellow.bold('WARN?');
       counter[promptTitle].warn++;
+      counter[promptTitle].warnList.push({ index, type, title, message: checkResult.message });
     }
 
     p.addRow({
@@ -301,7 +263,20 @@ const main = async () => {
     const { pass, warn, error } = counter[promptTitle];
     console.log(chalk.blue.bold(`\n${promptTitle}`));
     console.log(chalk.green.bold(`PASS: ${pass}`) + chalk.yellow.bold(` WARN: ${warn}`) + chalk.red.bold(` ERROR: ${error}`));
+    if (warn > 0) {
+      console.log(chalk.yellow.bold('WARN LIST:'));
+      counter[promptTitle].warnList.forEach((warn) => {
+        console.log(chalk.yellow(`[${warn.index}] (${warn.type}) ${warn.title}: ${warn.message}`));
+      });
+    }
+    if (error > 0) {
+      console.log(chalk.red.bold('ERROR LIST:'));
+      counter[promptTitle].errorList.forEach((error) => {
+        console.log(chalk.red(`[${error.index}] (${error.type}) ${error.title}: ${error.message}`));
+      });
+    }
   }
+
 };
 
 main();
