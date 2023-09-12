@@ -1,0 +1,669 @@
+<div>
+        <ul>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0-infrstructure-as-code-%EB%8F%84%EA%B5%AC-%ED%85%8C%EB%9D%BC%ED%8F%BCterraform">들어가며: Infrstructure as Code 도구 테라폼<sup>Terraform</sup></a></li>
+        <li>
+<a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC-%EC%84%A4%EC%B9%98">테라폼 설치</a>
+        <ul>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC-%EB%B2%84%EC%A0%84-%EA%B4%80%EB%A6%AC">테라폼 버전 관리</a></li>
+        </ul>
+</li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%9B%B9-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%9D%B8%ED%94%84%EB%9D%BC%EC%8A%A4%ED%8A%B8%EB%9F%AD%EC%B2%98-%ED%94%84%EB%A1%9C%EB%B9%84%EC%A0%80%EB%8B%9D">테라폼을 사용한 웹 애플리케이션 인프라스트럭처 프로비저닝</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90%EB%93%A4">테라폼의 기본 개념들</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EC%B2%AB-%EB%B2%88%EC%A7%B8-%EB%8B%A8%EA%B3%84---%EC%95%84%EB%A7%88%EC%A1%B4-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%84%A4%EC%A0%95">첫 번째 단계 - 아마존 웹 서비스 설정</a></li>
+        <li>
+<a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%91%90-%EB%B2%88%EC%A7%B8-%EB%8B%A8%EA%B3%84---hcl%EB%A1%9C-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EC%A0%95%EC%9D%98%ED%95%98%EA%B3%A0-aws%EC%97%90-%ED%94%84%EB%A1%9C%EB%B9%84%EC%A0%80%EB%8B%9D">두 번째 단계 - HCL로 리소스 정의하고 AWS에 프로비저닝</a>
+        <ul>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#aws-%ED%94%84%EB%A1%9C%EB%B0%94%EC%9D%B4%EB%8D%94-%EC%A0%95%EC%9D%98">AWS 프로바이더 정의</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%B4%88%EA%B8%B0%ED%99%94">테라폼 프로젝트 초기화</a></li>
+        <li>
+<a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EC%B2%AB-%EB%B2%88%EC%A7%B8-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98-ec2-%EC%9A%A9-ssh-%ED%82%A4-%ED%8E%98%EC%96%B4-%EC%A0%95%EC%9D%98">첫 번째 이터레이션: EC2 용 SSH 키 페어 정의</a>
+        <ul>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EC%B2%AB-%EB%B2%88%EC%A7%B8-%EC%8A%A4%ED%85%9D-hcl-%EC%96%B8%EC%96%B4%EB%A1%9C-%ED%95%84%EC%9A%94%ED%95%9C-%EB%A6%AC%EC%86%8C%EC%8A%A4%EB%A5%BC-%EC%A0%95%EC%9D%98">첫 번째 스텝: HCL 언어로 필요한 리소스를 정의</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%91%90-%EB%B2%88%EC%A7%B8-%EC%8A%A4%ED%85%9D-%EC%84%A0%EC%96%B8%ED%95%9C-%EB%A6%AC%EC%86%8C%EC%8A%A4%EB%93%A4%EC%9D%B4-%EC%83%9D%EC%84%B1%EA%B0%80%EB%8A%A5%ED%95%9C%EC%A7%80-%EA%B3%84%ED%9A%8Dplan%EC%9D%84-%ED%99%95%EC%9D%B8">두 번째 스텝: 선언한 리소스들이 생성가능한지 계획(Plan)을 확인</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EC%84%B8-%EB%B2%88%EC%A7%B8-%EC%8A%A4%ED%85%9D-%EC%84%A0%EC%96%B8%EB%90%9C-%EB%A6%AC%EC%86%8C%EC%8A%A4%EB%93%A4%EC%9D%84-%EC%95%84%EB%A7%88%EC%A1%B4-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4%EC%97%90-%EC%A0%81%EC%9A%A9apply">세 번째 스텝: 선언된 리소스들을 아마존 웹 서비스에 적용(Apply)</a></li>
+        </ul>
+</li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%91%90-%EB%B2%88%EC%A7%B8-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98-ssh-%EC%A0%91%EC%86%8D-%ED%97%88%EC%9A%A9%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%EA%B7%B8%EB%A3%B9">두 번째 이터레이션: SSH 접속 허용을 위한 시큐리티 그룹</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EC%84%B8-%EB%B2%88%EC%A7%B8-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98-ec2-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%A0%95%EC%9D%98">세 번째 이터레이션: EC2 인스턴스 정의</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%84%A4-%EB%B2%88%EC%A7%B8-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98-rds-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%A0%95%EC%9D%98">네 번째 이터레이션: RDS 인스턴스 정의</a></li>
+        </ul>
+</li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EC%B5%9C%EC%A2%85-%ED%85%8C%EB%9D%BC%ED%8F%BC-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8C%EC%8A%A4-%EC%BD%94%EB%93%9C">최종 테라폼 프로젝트 소스 코드</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%94%84%EB%A1%9C%EB%B9%84%EC%A0%80%EB%8B%9D%EB%90%9C-%EC%9D%B8%ED%94%84%EB%9D%BC%EC%8A%A4%ED%8A%B8%EB%9F%AD%EC%B2%98-%EC%9D%BC%EA%B4%84-%EC%A2%85%EB%A3%8C">프로비저닝된 인프라스트럭처 일괄 종료</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%AA%A8%EB%93%A0-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EB%8B%A4%EC%8B%9C-%ED%94%84%EB%A1%9C%EB%B9%84%EC%A0%80%EB%8B%9D%ED%95%98%EA%B8%B0">모든 리소스 다시 프로비저닝하기</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%A7%88%EC%B9%98%EB%A9%B0-%ED%85%8C%EB%9D%BC%ED%8F%BC%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0">마치며: 테라폼을 사용하는 이유</a></li>
+        <li>
+<a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%EB%8D%94-%EC%9D%BD%EC%9D%84%EA%B1%B0%EB%A6%AC">더 읽을거리</a>
+        <ul>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC-%EA%B3%B5%EC%8B%9D-%EB%AC%B8%EC%84%9C">테라폼 공식 문서</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC---aws-%ED%94%84%EB%A1%9C%EB%B0%94%EC%9D%B4%EB%8D%94-%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4">테라폼 - AWS 프로바이더 레퍼런스</a></li>
+        <li><a target="_blank" href="https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code#%ED%85%8C%EB%9D%BC%ED%8F%BC%EC%9D%84-%EC%86%8C%EA%B0%9C%ED%95%9C-%ED%95%9C%EA%B5%AD%EC%96%B4-%EB%AC%B8%EC%84%9C">테라폼을 소개한 한국어 문서</a></li>
+        </ul>
+</li>
+        </ul>
+<h2 id="들어가며-infrstructure-as-code-도구-테라폼terraform">들어가며: Infrstructure as Code 도구 테라폼<sup>Terraform</sup>
+</h2>
+<p><a target="_blank" href="https://www.terraform.io/">테라폼</a><sup>Terraform</sup>은 <a target="_blank" href="https://www.hashicorp.com/">하시코프</a><sup>Hashicorp</sup>에서 오픈소스로 개발중인 인프라스트럭처 관리 도구입니다. 서비스 실행에 필요한 환경을 구축하는 도구라는 점에서 <a target="_blank" href="https://www.chef.io/chef/">셰프</a><sup>Chef</sup>나 <a target="_blank" href="https://www.ansible.com/">앤서블</a><sup>Ansible</sup> 같은 설정 관리 도구와 더불어 프로비저닝 도구로 분류됩니다. 테라폼은 코드로서의 인프라스트럭처<sup>Infrstructure as Code</sup>를 지향하고 있는 도구로서, GUI나 웹 콘솔을 사용해 서비스 실행에 필요한 리소스를 관리하는 대신 필요한 리소스들을 선언적인 코드로 작성해 관리할 수 있도록 해줍니다.</p>
+<p>이 글에서는 테라폼의 기본적인 개념들을 소개하고, 테라폼으로 아마존 웹 서비스<sup>Amazon Web Serivce</sup>(이하 AWS)에서 간단한 웹 애플리케이션을 배포하기 위한 인프라스트럭처를 프로비저닝해보겠습니다.</p>
+<div><p>
+44BITS 소식과 클라우드 뉴스를 전해드립니다. 지금 5,000명 이상의 구독자와 함께 하고 있습니다 📮
+</p>
+</div>
+<h2 id="테라폼-설치">테라폼 설치</h2>
+<p>테라폼을 사용하려면 먼저 설치를 해야 합니다. 맥OS<sup>macOS</sup>에서는 홈브류<sup>Homebrew</sup>를 사용해 간단히 설치할 수 있습니다.</p>
+<pre><code>$ brew install terraform</code></pre>
+<p>설치가 잘 되었는지 확인해봅니다.</p>
+<pre><code>$ terraform version
+Terraform v0.12.23</code></pre>
+<p>홈브류를 사용하면 일반적으로 현재 릴리즈된 최신 버전이 설치 됩니다. 이 글은 v0.12.23를 기반으로 작성되었습니다.<span>*</span></p>
+<p><span>*</span> 이 글은 원래 0.10.2를 기반으로 작성되었습니다. 2020년 3월 0.12.23 버전을 기준으로 내용을 업데이트했습니다.</p>
+<p>다른 운영체제를 사용한다면 <a target="_blank" href="https://www.terraform.io/downloads.html">다운로드</a> 페이지에서 직접 실행 가능한 바이너리 파일을 다운로드 받을 수 있습니다. 과거 버전이 필요하다면 <a target="_blank" href="https://releases.hashicorp.com/terraform/?_ga=2.34173473.1651083793.1496392362-1657749582.1486466048">테라폼 릴리즈</a> 페이지에서 찾을 수 있습니다.</p>
+<h3 id="테라폼-버전-관리">테라폼 버전 관리</h3>
+<p>특정 버전의 테라폼을 사용하고 싶거나, 여러 버전을 사용할 필요가 있을 때는 tfenv를 사용하면 편리합니다. tfenv는 테라폼 버전 매니저로 맥OS<sup>macOS</sup>, 리눅스<sup>Linux</sup>, 윈도우<sup>Windows</sup>를 지원하고 있습니다. 맥에서는 테라폼과 마찬가지로 홈브류를 사용해 설치할 수 있습니다.<span>*</span></p>
+<p><span>*</span> 홈브류 사용시 terraform과 tfenv 패키지를 동시에 설치하면 문제가 되거나 설치에 실패할 수 있습니다. 둘 중 하나만 사용하는 것을 추천드립니다.</p>
+<pre><code>$ brew install tfenv</code></pre>
+<p>특정 버전을 <code>install</code> 서브 커맨드로 설치할 수 있습니다. <code>use</code> 명령어로 설치된 버전 중에서 사용하고자 하는 버전을 선택하면, 해당 버전이 활성화됩니다. 여기서는 이 글에서 사용한 0.12.23 버전을 활성화해보겠습니다.</p>
+<pre><code>$ tfenv install 0.12.23
+$ tfenv use 0.12.23
+$ terraform version
+Terraform v0.12.23</code></pre>
+<p>테라폼 0.12.23 버전이 활성화된 것을 확인할 수 있습니다.</p>
+<p>tfenv에 대한 보다 자세한 설명은 <a target="_blank" href="https://www.44bits.io/ko/post/managing-teraform-versions-with-tfenv">tfenv로 테라폼(Terraform) 버전 관리하기</a>를 참고해주세요.</p>
+<h2 id="테라폼을-사용한-웹-애플리케이션-인프라스트럭처-프로비저닝">테라폼을 사용한 웹 애플리케이션 인프라스트럭처 프로비저닝</h2>
+<p>이 글에서는 간단한 웹 애플리케이션을 아마존 웹 서비스에 배포하는 상황을 가정하겠습니다. 이 애플리케이션은 EC2 가상 머신에서 동작하며, RDS 데이터베이스에 데이터를 저장합니다. 테라폼으로 한 단계씩 이 인프라스터럭처를 프로비저닝해보고자 합니다. 다음과 같은 단계로 진행합니다.</p>
+<ul>
+<li>
+<strong>1단계</strong> - 먼저 아마존 웹 서비스 계정을 준비하고, API 키를 설정합니다.</li>
+<li>
+<strong>2단계 스텝 1</strong> - 인프라스트럭처를 정의하는 HCL 언어로 필요한 리소스를 선언합니다.</li>
+<li>
+<strong>2단계 스텝 2</strong> - 선언된 리소스들이 생성가능한지 계획(Plan)을 확인합니다.</li>
+<li>
+<strong>2단계 스텝 3</strong> - 선언된 리소스들을 아마존 웹 서비스에 적용(Apply)합니다.</li>
+<li>
+<strong>3단계</strong> - 웹 애플리케이션을 배포합니다.</li>
+</ul>
+<p>1단계는 미리 준비되어있다면 건너뛰어도 무방합니다. 2단계는 생성하고자 하는 <strong>리소스 수 만큼 반복</strong>하면서 점진적으로 진행합니다. 반복해나가면서 테라폼 정의 파일을 조금씩 완성시켜 나갑니다. 3단계에서는 준비된 인프라스트럭처에 웹 애플리케이션을 배포하는 단계입니다. 테라폼에서는 기본적으로 인프라스트럭치나 클라우드의 리소스를 정의하는 용도로 사용되므로, 애플리케이션을 배포하는 3단계는 다루지 않습니다.<span>*</span> 여기서는 인프라스트럭처를 프로비저닝하는 2단계까지 진행해나갑니다.</p>
+<p><span>*</span> 테라폼에도 애플리케이션에 관여하는 프로바이더들이 존재합니다. 하지만 이 글에서 다루고자 핵심 기능은 아니므로 이 글에서는 다루지 않습니다.</p>
+<h2 id="테라폼의-기본-개념들">테라폼의 기본 개념들</h2>
+<p>이 글에서 다룰 테라폼의 기본 개념들입니다. 각 개념들에 대해서는 튜토리얼을 진행해나가면서 자세히 설명합니다.</p>
+<dl>
+프로비저닝<sup>Provisioning</sup>
+<dd>어떤 프로세스나 서비스를 실행하기 위한 준비 단계를 프로비저닝이라고 이야기합니다. 프로비저닝에는 크게 네트워크나 컴퓨팅 자원을 준비하는 작업과 준비된 컴퓨팅 자원에 사이트 패키지나 애플리케이션 의존성을 준비하는 단계로 나뉘어집니다. 명확한 경계는 불분명하지만 테라폼은 전자를 주로 다루는 도구입니다.
+</dd>
+프로바이더<sup>Provider</sup>
+<dd>테라폼과 외부 서비스를 연결해주는 기능을 하는 모듈입니다. 예를 들어 테라폼으로 AWS 서비스의 컴퓨팅 자원을 생성하기 위해서는 <code>aws</code> 프로바이더를 먼저 셋업해야합니다. 프로바이더로는 AWS, 구글 클라우드 플랫폼<sup>Google Cloud Platform</sup>, 마이크로소프트 애저<sup>Microsoft Azure</sup>와 같은 범용 클라우드 서비스를 비롯해 깃허브<sup>Github</sup>, 데이터도그<sup>Datadog</sup>, DNSimple과 같은 특정 기능을 제공하는 서비스, MySQL, 레빗MQ<sup>RabbitMQ</sup>, 도커<sup>Docker</sup>와 같은 로컬 서비스 등을 지원합니다. 전체 목록은 <a target="_blank" href="https://www.terraform.io/docs/providers/index.html">테라폼 프로바이더 문서</a>에서 찾아볼 수 있습니다.
+</dd>
+리소스(자원)<sup>Resource</sup>
+<dd>리소스란 특정 프로바이더가 제공해주는 조작 가능한 대상의 최소 단위입니다. 예를 들어 AWS 프로바이더는 <code>aws_instance</code> 리소스 타입을 제공하고, 이 <strong>리소스 타입</strong>을 사용해 Amazon EC2의 가상 머신 <strong>리소스</strong>를 선언하고 조작하는 것이 가능합니다. EC2 인스턴스, 시큐리티 그룹, 키 페어 모두 <code>aws</code> 프로바이더가 제공해주는 리소스 타입입니다.
+</dd>
+HCL<sup>Hashicorp Configuration Language</sup>
+<dd>
+<a target="_blank" href="https://github.com/hashicorp/hcl">HCL</a>은 테라폼에서 사용하는 설정 언어입니다. 테라폼에서 모든 설정과 리소스 선언은 HCL을 사용해 이루어집니다. 테라폼에서 HCL 파일의 확장자는 <code>.tf</code>를 사용합니다.
+</dd>
+계획<sup>Plan</sup>
+<dd>테라폼 프로젝트 디렉터리 아래의 모든 <code>.tf</code> 파일의 내용을 실제로 적용 가능한지 확인하는 작업을 계획이라고 합니다. 테라폼은 이를 <code>terraform plan</code> 명령어로 제공하며, 이 명령어를 실행하면 어떤 리소스가 생성되고, 수정되고, 삭제될지 계획을 보여줍니다.
+</dd>
+적용<sup>Apply</sup>
+<dd>테라폼 프로젝트 디렉터리 아래의 모든 <code>.tf</code> 파일의 내용대로 리소스를 생성, 수정, 삭제하는 일을 적용이라고 합니다. 테라폼은 이를 <code>terraform apply</code> 명령어로 제공합니다. 이 명령어를 실행하기 전에 변경 예정 사항은 <code>plan</code> 명령어를 사용해 확인할 수 있습니다. 적용하기 전에도 플랜의 결과를 보여줍니다.
+</dd>
+</dl>
+<h2 id="첫-번째-단계---아마존-웹-서비스-설정">첫 번째 단계 - 아마존 웹 서비스 설정</h2>
+<p><strong>이미 AWS 계정을 가지고 있으며, IAM 계정에 대해 이해하고 있다면 두 번째 단계로 넘어가주세요.</strong></p>
+<p>테라폼은 인프라스트럭처 리소스를 선언할 수 있는 도구로서 다양한 서비스들을 지원합니다. 테라폼에서는 이를 <strong>프로바이더<sup>Providers</sup></strong>라고 부릅니다. 테라폼은 다양한 프로바이더를 지원하지만, 이 중에서 가장 중요한 프로바이더는 단연 클라우드 서비스입니다. 대표적으로 아마존 웹 서비스<sup>Amazon Web Service</sup>, 마이크로소프트 애저<sup>Microsoft Azure</sup>, 구글 클라우드 플랫폼<sup>Google Cloud Platform</sup>가 있습니다.</p>
+<p>여기서는 아마존 웹 서비스의 리소스를 테라폼으로 작성해나가겠습니다. 아마존 웹 서비스 프로바이더를 사용하기 위해서는 먼저 AWS 계정이 있어야합니다. 계정이 있다면 해당 계정을 사용하면 되고, 계정이 없다면 새로 만들어야 합니다. 계정을 생성하는 법에 대해서는 <a target="_blank" href="https://www.44bits.io/ko/post/creating-aws-web-service-account">아마존 웹 서비스(AWS, Amazon Web Service) 계정 생성하기</a>를 참고해주세요. <span>*</span> 이 튜토리얼에서는 서울 리전을 사용하며, 계정 생성 시 함께 만들어지는 기본 VPC를 사용한다고 가정합니다.</p>
+<p>아마존 루트 계정에 액세스 키를 발급하고 아래의 내용을 진행하는 것도 가능합니다. 하지만 루트 계정을 직접 사용하는 것은 권장하지 않습니다. terraform 이라는 이름으로 IAM 사용자를 생성하고 관리자 권한을 부여해 진행할 것을 추천합니다. IAM 사용자 개념과 생성에 대한 자세한 내용은 <a target="_blank" href="https://www.44bits.io/ko/page/publishing_and_managing_aws_user_access_key">아마존 웹 서비스 IAM 사용자의 액세스 키 발급 및 관리</a>를 참고해주세요.</p>
+<p><span>*</span> 클라우드 서비스는 사용한 만큼 비용이 발생하므로 주의가 필요합니다. 자세한 내용은 각 서비스의 요금 페이지를 참고해주세요.</p>
+<h2 id="두-번째-단계---hcl로-리소스-정의하고-aws에-프로비저닝">두 번째 단계 - HCL로 리소스 정의하고 AWS에 프로비저닝</h2>
+<p>이제 본격적으로 테라폼을 사용해 필요한 리소스들을 정의해나갑니다. 이 단계는 다시 세 개의 작은 스텝으로 나뉘어져있으며, 리소스 별로 반복해나갑니다. 두 번째 단계를 다시 보면 다음과 같습니다.</p>
+<ul>
+<li>
+<strong>스텝 1</strong> - 인프라스트럭처를 정의하는 HCL 언어로 필요한 리소스를 선언합니다.</li>
+<li>
+<strong>스텝 2</strong> - 선언된 리소스들이 생성가능한지 계획(Plan)을 확인합니다.</li>
+<li>
+<strong>스텝 3</strong> - 선언된 리소스들을 아마존 웹 서비스에 적용(Apply)합니다.</li>
+</ul>
+<p>EC2와 RDS 리소스를 생성하기 위해 4개의 리소스 <code>aws_key_pair</code>, <code>aws_security_group</code>, <code>aws_instance</code>, <code>aws_db_instance</code>를 정의해나갈 것입니다. 3스텝을을 하나의 이터레이션으로 4번의 이터레이션을 진행합니다. 리소스를 정의하기에 앞서서 먼저 해야할 일이 있습니다.</p>
+<p>먼저 테라폼에 <code>aws</code> 프로바이더를 정의해야합니다.</p>
+<h3 id="aws-프로바이더-정의">AWS 프로바이더 정의</h3>
+<p>먼저 프로젝트 디렉터리와 테라폼 파일 몇 개를 생성합니다.</p>
+<pre><code>$ mkdir web_infra
+$ cd web_infra
+$ touch provider.tf web_infra.tf</code></pre>
+<p>디렉터리 이름과 파일 이름에 특별한 원칙은 없습니다. 테라폼은 기본적으로 특정 디렉터리에 있는 모든 <code>.tf</code> 확장자를 가진 파일을 전부 읽어들인 후, 리소스 생성, 수정, 삭제 작업을 진행합니다. 파일은 상황에 따라 적절히 나눠줄 필요가 있지만, 여기서는 작성할 내용이 많지 않기 때문에 <code>provider.tf</code>와 <code>web_infra.tf</code> 두 개로 나눠서 작성해보겠습니다.</p>
+<p>먼저 <code>provider.tf</code> 파일을 작성합니다. <code>.tf</code> 확장자의 파일은 HCL 언어로 작성 됩니다. HCL은 Hashicorp Configuration Language의 줄임말로 테라폼이나 다른 하시코프 애플리케이션에서 사용하기 위해 만들어진 설정 언어입니다.</p>
+<p>HCL로 다음과 같이 AWS 프로바이더를 정의합니다.</p>
+<pre><code>provider "aws" {
+  access_key = "&lt;AWS_ACCESS_KEY&gt;"
+  secret_key = "&lt;AWS_SECRET_KEY&gt;"
+  region = "ap-northeast-2"
+}</code></pre>
+<p>이 때 <code>&lt;AWS_ACCESS_KEY&gt;</code>와 <code>&lt;AWS_SECRET_KEY&gt;</code>는 앞서 생성한 terraform 사용자의 인증 정보로 대체해줍니다. <code>region</code>은 리소스를 정의할 AWS 리전을 설정합니다. 여기서 사용한 <code>ap-northeast-2</code>는 AWS의 서울 리전을 의미합니다.<span>*</span></p>
+<p>프로바이더 선언은 아래와 같은 형식을 따릅니다.</p>
+<pre><code>provider "&lt;PROVIDER_NAME&gt;"</code></pre>
+<p>위의 예제에서는 <code>aws</code> 프로바이더를 사용하므로 <code>&lt;PROVIDER_NAME&gt;</code> 자리에 <code>aws</code>가 왔습니다. 프로바이더 선언 뒤로 중괄호 블록이 따라올 수 있습니다.</p>
+<pre><code>provider "&lt;PROVIDER_NAME&gt;" { }</code></pre>
+<p>중괄호 사이에는 프로바이더에서 사용가능한 하나 이상의 속성(<code>CONFIG</code>)들을 지정할 수 있습니다.</p>
+<pre><code>provider "&lt;PROVIDER_NAME&gt;" {
+  &lt;ATTR_NAME&gt; = "&lt;ATTR_VALUE&gt;"
+}</code></pre>
+<p>위에서 정의한 내용을 다시 살펴보면 <code>aws</code> 프로바이더를 선언하고, 이 프로바이더에 <code>access_key</code>, <code>secret_key</code>, <code>region</code> 속성을 지정했다고 이해할 수 있습니다. 참고로 뒤에서 다루게 될 리소스 정의도 프로바이더 정의와 크게 다르지 않습니다.</p>
+<p>여기서는 3가지 속성만을 지정했지만, <code>aws</code> 프로바이더는 더 다양한 속성들을 지원합니다. AWS 프로바이더 정의 블록에서 사용할 수 있는 모든 옵션은 테라폼 공식 문서 <a target="_blank" href="https://www.terraform.io/docs/providers/aws/index.html#argument-reference">AWS 프로바이더</a>의 인자 레퍼런스<sup>Argument Reference</sup> 절에서 찾아볼 수 있습니다.</p>
+<div>
+<p>
+환경변수로 AWS 프로바이더 설정
+</p>
+<div>
+<p>AWS 프로바이더를 설정할 때 파일 안에 액세스 키를 기록했습니다. 테라폼은 코드로 작성되기 때문에 다른 프로그래밍 언어 소스 코드와 마찬가지로 깃<sup>Git</sup>과 같은 버전 관리 도구에서 관리하는 게 일반적입니다. 따라서 민감한 정보를 저장소에 기록해서는 안 됩니다. 이러한 문제를 피하기 위해 인증 정보를 프로바이더 속성값을 사용하지 않고 테라폼을 실행하는 환경에 직접 환경변수로 정의하는 방법을 사용할 수 있습니다. 이 때 사용하는 환경변수는 AWS 커맨드라인 인터페이스<sup>AWSCLI</sup>에서 사용하는 환경 변수와 같습니다.</p>
+<pre><code>$ export AWS_ACCESS_KEY_ID="&lt;AWS_ACCESS_KEY_ID&gt;"         # access_key
+$ export AWS_SECRET_ACCESS_KEY="&lt;AWS_SECRET_ACCESS_KEY&gt;" # secret_key
+$ export AWS_DEFAULT_REGION="ap-northeast-2"             # region</code></pre>
+<p>이러한 환경변수를 정의하면 프로바이더에서 대응하는 옵션들을 생략할 수 있습니다. 자세한 내용은 <a target="_blank" href="https://www.44bits.io/ko/page/aws_command_line_interface_basic#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98">AWS 커맨드라인 인터페이스(awscli) 기초</a>의 환경변수 절을 참고해주세요.</p>
+</div>
+</div>
+<h3 id="테라폼-프로젝트-초기화">테라폼 프로젝트 초기화</h3>
+<p>현재 사용하는 버전이 0.10보다 낮다면 테라폼 프로젝트를 별도로 초기화하지 않아도 됩니다. 0.10 이전에는 테라폼 본체에 프로바이더들이 포함되어 있었지만 0.10부터 프로바이더가 플러그인으로 분리되었고, 이에 따라서 테라폼 프로젝트를 별도로 초기화해야합니다. 테라폼은 테라폼 프로젝트를 초기화할 때 프로바이더 설정을 보고 필요한 플러그인들을 설치합니다.</p>
+<p><code>web_infra</code> 디렉터리에서 <code>terraform init</code> 명령어를 실행합니다.</p>
+<pre><code>$ terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Checking for available provider plugins...
+- Downloading plugin for provider "aws" (hashicorp/aws) 2.53.0...
+...
+Terraform has been successfully initialized!</code></pre>
+<p>테라폼이 현재 디렉터리에 아래에 선언된 프로바이더 플러그인을 설치해줍니다. 이제 프로젝트 디렉터리에서 <code>terraform version</code> 명령어를 실행하면 테라폼 프로젝트에서 사용중인 프로바이더들의 버전도 함께 보여줍니다.</p>
+<pre><code>$ terraform version
+Terraform v0.12.23
++ provider.aws v2.53.0</code></pre>
+<div>
+<p>
+테라폼의 버전과 프로바이더의 버전
+</p>
+<div>
+<p>테라폼 버전에서 테라폼의 버전과 프로바이더 버전이 따로 출력된다는 의미는 두 버전이 따로 관리된다는 의미입니다. 테라폼을 사용하다보면 테라폼의 버전과 프로바이더 버전에 따라서 미묘하게 실행 결과가 다른 경우가 상당히 많이 있습니다. 따라서 가능하면 테라폼과 프로바이더의 버전을 프로젝트에 고정해서 사용하고 명시적으로 업데이트하는 것을 권장합니다.</p>
+<p>예를 들어 다음 코드로 테라폼 버전을 <code>0.12.23</code>, aws 프로바이더는 <code>2.53.0</code> 이상으로 고정할 수 있습니다. 이 내용은 프로바이더 정의 파일에 같이 작성해줍니다.</p>
+<pre><code>terraform {
+  required_version = "0.12.23"
+  required_providers {
+    aws = "&gt;= 2.53.0"
+  }
+}</code></pre>
+<p>이제 이 코드는 테라폼 0.12.23에서만 동작합니다. 프로바이더가 설치되지 않은 상태에서 초기화할 경우 aws 2.53.0 이상 버전의 프로바이더를 설치해줍니다. 이 이하 버전이 설치되어있는 경우 동작하지 않으며 다시 초기화해서 프로바이더를 다시 설치해야합니다.</p>
+</div>
+</div>
+<h3 id="첫-번째-이터레이션-ec2-용-ssh-키-페어-정의">첫 번째 이터레이션: EC2 용 SSH 키 페어 정의</h3>
+<p>프로바이더 셋업이 테라폼을 사용하기 위한 준비 작업이었다면 이제 AWS 리소스를 정의할 차례입니다. 첫 번째 리소스는 <a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/key_pair.html"><code>aws_key_pair</code></a>입니다. 이 리소스는 EC2 인스턴스를 생성하기 위해 필요합니다. AWS에서 제공하는 가상 컴퓨팅 자원인 EC2 인스턴스를 생성하더라도 키 페어가 미리 정의되어 있지 않다면, 생성한 인스턴스에 접근할 수 없습니다. 따라서 인스턴스를 생성하기 전에 먼저 키 페어를 생성해야합니다. 앞서 이야기한 대로 한 스텝씩 차례대로 진행해나가겠습니다.</p>
+<h4 id="첫-번째-스텝-hcl-언어로-필요한-리소스를-정의">첫 번째 스텝: HCL 언어로 필요한 리소스를 정의</h4>
+<p>첫 번째 스텝은 HCL로 리소스를 정의하는 일입니다. 리소스 정의 형식은 프로바이더와 비슷합니다. <code>web_infra.tf</code> 파일에 다음 내용을 추가해줍니다.</p>
+<pre><code>resource "aws_key_pair" "web_admin" {
+  key_name = "web_admin"
+  public_key = "&lt;PUBLIC_KEY&gt;"
+}</code></pre>
+<p>여기서 주목할 부분은 <code>resource</code> 키워드 다음에 <code>"aws_key_pair" "web_admin"</code>과 같이 두 개의 문자열이 온다는 점입니다.</p>
+<p>첫 번째 문자열은 <strong>리소스 타입</strong>의 이름입니다. 따라서 이 자리에 올 수 있는 값들은 프로바이더에서 제공하는 리소스 타입의 이름들로 한정되어있습니다. 리소스 이름에서는 관습적으로 프로바이더 이름에 언더스코어 붙여 전치사(prefix)로 사용합니다. 즉, 리소스 이름 <code>aws_key_pair</code>에서 <code>aws</code> 프로바이더가 제공하는 <code>key_pair</code> 리소스라는 것을 유추할 수 있습니다.</p>
+<p>두 번째 문자열 <code>web_admin</code>은 이 리소스에 임의로 붙이는 이름입니다.<span>*</span> 이 이름은 테라폼 코드의 다른 곳에서 이 리소스를 참조하기 위해서 사용합니다. 리소스 타입과 이름을 <code>.</code>으로 이어 <code>aws_key_pair.web_admin</code>과 같은 형식으로 참조합니다.</p>
+<p><span>*</span> 여기서 지정하는 이름은 AWS에서 사용하는 이름이 아닙니다. 테라폼 코드의 다른 부분이 이 리소스를 참조하기 위해서만 사용하는 이름이므로, AWS에서 정의되는 리소스의 이름과 혼동해서는 안 됩니다. AWS 리소스의 이름은 주로 속성값을 통해서 지정합니다.</p>
+<p>그 뒤로 중괄호가 따라오며, 속성을 지정하는 방식은 프로바이더와 같습니다.</p>
+<pre><code>resource "aws_key_pair" "web_admin" {
+  key_name = "web_admin"
+  public_key = "&lt;PUBLIC_KEY&gt;"
+}</code></pre>
+<p><code>key_name</code>은 AWS 상에 현재 정의하는 키 페어를 등록할 이름입니다. 필수적인 것은 아니지만 관리 상의 편의를 위해 리소스의 이름과 같은 이름을 사용하는 것을 권장합니다.</p>
+<p><code>public_key</code>에는 접속에 사용할 공개키의 값을 넣어야합니다. 로컬 환경에 미리 생성해둔 SSH 키가 있다면 이 키를 사용해도 무방합니다. 키가 없다면 새로 생성해야합니다. 다음 명령어로 SSH 키를 생성할 수 있습니다.</p>
+<pre><code>$ ssh-keygen -t rsa -b 4096 -C "&lt;EMAIL_ADDRESS&gt;" -f "$HOME/.ssh/web_admin" -N ""</code></pre>
+<p>명령어를 실행하고 <code>~/.ssh</code> 디렉터리를 확인 하면 비밀키 <code>web_admin</code>과 공개키 <code>web_admin.pub</code> 두 개의 파일이 생성되어 있을 것입니다. 여기서 필요한 것은 공개키인 <code>web_admin.pub</code> 파일의 내용입니다. 공개키의 내용을 테라폼에 추가하는 방법은 크게 두 가지가 있습니다.</p>
+<p>첫번째 방법은 파일의 내용을 복사해서 <code>&lt;PUBLIC_KEY&gt;</code>를 대체하는 방법입니다.</p>
+<p>단, 파일 내용을 문자열에 담기에는 길어보입니다. 그렇다면 두 번째 방법을 사용할 수 있습니다. <code>file()</code> 함수를 사용하면, 로컬 파일의 내용을 읽어와 속성값을 지정할 수 있습니다. 위와 같이 <code>~/.ssh/web_admin.pub</code> 경로에 공개키가 있다면 다음과 같이 <code>public_key</code> 속성을 지정하면 됩니다.</p>
+<pre><code>public_key = file("~/.ssh/web_admin.pub")</code></pre>
+<p>테라폼에서 <code>""</code> 쌍따옴표로 감싸진 값은 문자열로 정의됩니다. 이와 달리 테라폼에서 미리 정의된 함수를 사용해서 값을 생성할 수도 있습니다. 파일 경로 문자열을 <code>"~/.ssh/web_admin.pub"</code> 테라폼의 <code>file()</code> 함수에 넘기고 리턴된 값이 <code>public_key</code>에 대입됩니다. <code>file()</code> 함수는 인자의 경로의 파일을 문자열로 읽습니다. <code>public_key</code>를 파일에서 읽어온다면 최종적인 모습은 다음과 같습니다.</p>
+<pre><code>resource "aws_key_pair" "web_admin" {
+  key_name = "web_admin"
+  public_key = file("~/.ssh/web_admin.pub")
+}</code></pre>
+<p>여기까지 첫 번째 리소스를 작성했습니다.</p>
+<h4 id="두-번째-스텝-선언한-리소스들이-생성가능한지-계획plan을-확인">두 번째 스텝: 선언한 리소스들이 생성가능한지 계획(Plan)을 확인</h4>
+<p>이제 앞서 작성한 <code>aws_key_pair</code> 리소스를 실제로 AWS에 생성할 수 있는지 확인해야합니다.</p>
+<p>프로젝트 디럭터리에서 <code>terraform plan</code>을 실행합니다. <code>plan</code> 명령어를 사용하면 현재 정의되어있는 리소스들을 실제로 프로바이더에 적용했을 때 테라폼이 어떤 작업을 수행할지 계획을 보여줍니다.</p>
+<pre><code>❯ terraform plan
+...
+Terraform will perform the following actions:
+  # aws_key_pair.web_admin will be created
+  + resource "aws_key_pair" "web_admin" {
+      + fingerprint = (known after apply)
+      + id          = (known after apply)
+      + key_name    = "web_admin"
+      + key_pair_id = (known after apply)
+      + public_key  = "ssh-rsa ...."
+Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+<p>위에서 작성한 리소스 코드와 비슷한 모양으로 결과가 출력됩니다. 테라폼 앞에 있는 <code>+</code> 문자는 ’<code>aws_key_pair.wed_admin</code> 리소스를 생성하겠다’는 의미입니다.</p>
+<p><code>plan</code>의 작동 방식을 이해하기 위해서는 테라폼의 동작 방식을 이해할 필요가 있습니다. 테라폼에서 리소스는 선언적으로 기술됩니다. 테라폼은 <code>.tf</code> 파일에 기술되어있는 모든 리소스를 읽어들이고 먼저 이 리소스들이 존재하는 상태를 가정합니다. 편의상 이를 <strong>이상적인 상태</strong>라고 부르겠습니다. 예를 들어 <code>aws_key_pair.web_admin</code>은 이상적인 상태에 존재하는 리소스입니다. 하지만 이 리소스는 실제로 생성된 적은 없기 때문에 프로바이더에 지정한 AWS 계정에는 존재하지 않습니다. 즉, 내 AWS 계정의 <strong>실제 상태</strong>에는 <code>aws_key_pair.web_admin</code>이 아직 존재하지 않습니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/b56/b565bb8a633c3cedc28446688a63c5de5cd50aec2239a3a257ad6d7ff18d5de8.m.png" alt="리소스를 추가하기 전의 최초 상태" />
+</figure>
+<p>테라폼의 가장 중요한 역할을 실제 상태를 이상적인 상태와 동일하게 만드는 일입니다. 테라폼에서는 이 작업을 적용한다<sup>apply</sup>고 표현합니다. 테라폼 <code>plan</code>은 <code>apply</code>하기 전에 이상적인 상태와 실제 상태를 비교해 둘을 동일하게 만들기 위해서 해야할 일을 찾아내는 작업입니다. 이 예제에서 <code>aws_key_pair.web_admin</code> 리소스는 이상적인 상태에만 존재하고 실제 상태에는 존재하지 않습니다. 따라서 테라폼이 실제 상태를 이상적인 상태와 동일하게 만들기 위해서는 실제 상태에 <code>aws_key_pair.web_admin</code> 리소스를 생성해야 합니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/4ef/4ef46a30d34837f6be3a8a70730ccb34907e4b61e151ca0ea32f8a39371ce8a1.m.png" alt="terraform plan이 보여주는 리소스 생성 계획" />
+</figure>
+<p>이게 바로 <code>+ resource "aws_key_pair" "web_admin"</code>이 의미하는 바입니다. 그 아래로 보여지는 정보들은 새로 추가될 리소스의 속성들입니다. 이는 <code>.tf</code> 파일에서 정의한 내용일 수도 있고, 직접 지정하지 않았다면 기본값일 수도 있습니다. 단, <code>(known after apply)</code>라고 표시된 값은 실제로 리소스를 생성해야만 부여되는 값입니다. 즉, 아직 알 수 없습니다.</p>
+<pre><code>Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+<p>맨 아래 줄에는 변경 예정 사항을 한 줄로 요약해서 보여줍니다. 현재 정의된 <code>.tf</code> 파일들을 적용할 경우 1개의 리소스를 생성하고, 0개를 변경하고, 0개를 삭제한다는 의미입니다.</p>
+<h4 id="세-번째-스텝-선언된-리소스들을-아마존-웹-서비스에-적용apply">세 번째 스텝: 선언된 리소스들을 아마존 웹 서비스에 적용(Apply)</h4>
+<p>이제 계획<sup>plan</sup>을 통해 확인한 내용을 실제로 프로바이더에 적용해봅니다. <code>terraform apply</code> 명령어를 실행합니다.</p>
+<pre><code>$ terraform apply
+...
+Terraform will perform the following actions:
+  # aws_key_pair.web_admin will be created
+  + resource "aws_key_pair" "web_admin" {
+      + fingerprint = (known after apply)
+      + id          = (known after apply)
+      + key_name    = "web_admin"
+      + key_pair_id = (known after apply)
+      + public_key  = "ssh-rsa ..."
+    }
+Plan: 1 to add, 0 to change, 0 to destroy.
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+  Enter a value:</code></pre>
+<p>이전에는 <code>apply</code> 명령어를 실행하면 곧바로 리소스를 생성했습니다. 현재는 리소스를 생성하기 전에 <code>plan</code> 결과를 보여주고 <code>yes</code>를 입력해야만 리소스를 생성합니다. <code>yes</code>를 입력합니다.<span>*</span></p>
+<p><span>*</span> <code>apply</code> 명령어를 실행해도 <code>plan</code> 결과를 보여주고 실행 전에 승인이 필요하니 <code>plan</code>이 따로 필요없다고 느껴질 수도 있습니다. 하지만 코드 작성중에는 <code>apply</code>보다 <code>plan</code>으로 변경사항을 확인해나가는 것이 좋습니다. 또한 <code>apply</code> 작업이 많아지면 습관적으로 <code>yes</code>를 눌러버리는 경우도 있어서 꼭 <code>plan</code>을 따로 실행한 다음에 <code>apply</code>하는 것을 추천합니다.</p>
+<pre><code>aws_key_pair.web_admin: Creating...
+aws_key_pair.web_admin: Creation complete after 0s [id=web_admin]
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</code></pre>
+<p>정상적으로 <code>aws_key_pair.web_admin</code> 리소스가 생성된 것을 확인할 수 있습니다. 추가된 리소스는 웹 콘솔의 EC2 서브 메뉴에서도 확인할 수 있습니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/7f3/7f36a08c0d2196ec485313fb93f26b7bdf3691e39faa7bd868bf4688c62e815d.m.png" alt="웹 콘솔에서 새로 추가된 web_admin 키를 확인하기" />
+</figure>
+<p>앞서 설명했듯이 테라폼은 로컬에 정의된 이상적인 상태와 실제 상태를 동일하게 만듭니다. 계획에서 보여준대로 실제 상태에 <code>aws_key_pair.web_admin</code> 리소스를 생성했습니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/cae/cae571ffb76ac229b92da45b76a6e24914aa783b8b3d856808a7e74c22db35e4.m.png" alt="tf 파일들에 정의된 리소스들을 AWS에 적용한 후의 상태" />
+</figure>
+<p>이제 이상적인 상태와 실제 상태는 같습니다. 이 상태에서 <code>terraform plan</code>을 실행해봅니다.</p>
+<pre><code>$ terrafrom plan
+...
+aws_key_pair.web_admin: Refreshing state... [id=web_admin]
+------------------------------------------------------------------------
+No changes. Infrastructure is up-to-date.</code></pre>
+<p>현재 상태를 최신화하고 다시 두 상태를 비교합니다. 결과는 <code>No changes</code>. 즉, 두 상태가 같기 때문에 더 이상 변경할 게 없다는 의미입니다. 테라폼에서 리소스를 선언적으로 정의한다는 의미는 여기에서도 잘 드러납니다. 테라폼의 리소스 정의는 <strong>어떤 리소스를 생성하라</strong>는 절차적인 명령어가 아닙니다. 단지 이상적인 상태를 정의할 뿐입니다. 따라서 <code>terraform apply</code>를 여러번 실행하더라도 아무런 일도 일어나지 않습니다. 다시 한 번 <code>terraform apply</code>를 실행해보겠습니다.</p>
+<pre><code>$ terraform apply
+aws_key_pair.web_admin: Refreshing state... [id=web_admin]
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.</code></pre>
+<p>아무런 변화도 일어나지 않습니다. 그렇다면 테라폼은 이 상태 변화를 어떻게 관리하는 걸까요. <code>terraform apply</code>를 실행하고 나면 프로젝트 상에 중요한 변화가 하나 생깁니다. 작업 디렉터리 아래에 <code>terraform.tfstate</code> 파일이 하나 생성됩니다. 이 파일에는 실제 상태를 임시로 저장하는 동시에 테라폼에서 관리되는 리소스의 목록을 관리합니다.</p>
+<h3 id="두-번째-이터레이션-ssh-접속-허용을-위한-시큐리티-그룹">두 번째 이터레이션: SSH 접속 허용을 위한 시큐리티 그룹</h3>
+<p>두 번째로 정의할 리소스는 <a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/security_group.html"><code>aws_security_group</code></a>입니다. 이 리소스 역시 키 페어와 마찬가지로 인스턴스를 정의하는 데 필요합니다. 인스턴스를 생성해도 밖에서 접근할 수 있는 방법이 없다면 사용할 수가 없습니다. 따라서 SSH port를 외부에 열어주는 시큐리티 그룹을 만들 필요가 있습니다. 다음 내용을 <code>web_infra.tf</code> 맨 아래에 추가해줍니다</p>
+<pre><code>resource "aws_security_group" "ssh" {
+  name = "allow_ssh_from_all"
+  description = "Allow SSH port from all"
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}</code></pre>
+<p>여기서는 이름을 <code>ssh</code>로 붙여주었습니다. 키 페어 정의와 마찬가지 방법으로 속성을 지정합니다. <code>name</code>과 <code>description</code>에는 각각 시큐리티 그룹의 이름과 설명을 기입합니다. 여기서 특이한 점은 <code>ingress</code> 속성에 직접 값을 지정하는 대신 중괄호 블록이 따라온다는 점입니다. <code>ingress</code>는 인바운드 트래픽을 정의하는 속성으로 시큐리티 그룹에는 <code>ingress</code> 블록이 하나 이상 올 수 있습니다. <span>*</span></p>
+<p><span>*</span> 여기서는 사용하지 않았지만, 필요에 따라 아웃바운드 트래픽을 제어하는 <code>egress</code> 속성도 사용할 수 있습니다.</p>
+<p><code>ingress</code> 블록 안에는 <code>from_port</code>, <code>to_port</code>, <code>protocol</code>, <code>cidr_blocks</code> 속성을 지정합니다.</p>
+<p><code>from_port</code>와 <code>to_port</code>는 열어줄 포트의 범위를 의미합니다. 예를 들어 <code>from_port</code>가 60001이고 <code>to_port</code>가 60010이면, 60001부터 60010까지 10개의 포트를 열어줍니다. 여기서는 SSH(22) 포트만 허용하므로 둘 다 22로 지정합니다.</p>
+<p><code>protocol</code>은 통신에 사용할 프로토콜입니다. SSH는 TCP를 사용하므로 <code>tcp</code>를 지정합니다.</p>
+<p>마지막으로 <code>cidr_blocks</code>은 배열로 시큐리티 그룹을 적용할 <a target="_blank" href="https://ko.wikipedia.org/wiki/%EC%82%AC%EC%9D%B4%EB%8D%94_%28%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%82%B9%29">사이더 범위</a>를 지정합니다. 여기서 지정된 <code>0.0.0.0/0</code>은 모든 IP에서 접속을 허용한다는 의미입니다.</p>
+<p>이제 <code>plan</code>을 실행해봅니다.</p>
+<pre><code>$ terraform plan
+...
+  # aws_security_group.ssh will be created
+  + resource "aws_security_group" "ssh" {
+      + arn                    = (known after apply)
+      + description            = "Allow SSH port from all"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = ""
+              + from_port        = 22
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 22
+            },
+        ]
+      + name                   = "allow_ssh_from_all"
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + vpc_id                 = (known after apply)
+    }
+Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+<p>하나의 시큐리티 그룹이 추가될 예정임을 확인할 수 있습니다. 이 계획을 적용합니다.</p>
+<pre><code>$ terraform apply
+aws_security_group.ssh: Creating...
+aws_security_group.ssh: Creation complete
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</code></pre>
+<h3 id="세-번째-이터레이션-ec2-인스턴스-정의">세 번째 이터레이션: EC2 인스턴스 정의</h3>
+<p>앞서 정의한 키 페어와 시큐리티 그룹을 사용해 EC2 인스턴스를 정의할 차례이지만, 그 전에 한 가지 추가할 내용이 있습니다. 바로 VPC의 기본(default) 시큐리티 그룹을 불러오는 일입니다. 테라폼은 이미 클라우드 상에 정의되어 있는 리소스를 데이터 소스로 불러오는 기능을 제공합니다. <a target="_blank" href="https://www.terraform.io/docs/providers/aws/d/security_group.html"><code>aws_security_group</code></a> 데이터 소스를 사용해, 미리 정의된 시큐리티 그룹을 불러올 수 있습니다. 리소스를 정의하기 전에 다음 내용을 먼저 추가해줍니다.</p>
+<pre><code>data "aws_security_group" "default" {
+  name = "default"
+}</code></pre>
+<p>앞서 작성한 리소스 코드와 비슷하지만, 자세히 보면 <code>resource</code>가 아닌 <code>data</code>로 시작하는 것을 확인할 수 있습니다. 이 데이터 소스는 이름이 <code>default</code>인 시큐리티 그룹을 찾아 해당 리소스의 속성들을 참조할 수 있게해줍니다.</p>
+<div>
+<p>
+추가 필터를 사용해 시큐리티 그룹 찾기
+</p>
+<div>
+<p>VPC가 하나가 아니거나 별도로 <code>default</code>와 같은 이름으로 시큐리티 그룹을 생성한 적이 있다면, 찾고자 하는 리소스가 유일하다고 보장할 수 없습니다. 이 경우 <code>id</code>, <code>vpc_id</code>, <code>tags</code>와 같은 추가적인 필터를 사용해서 정확하게 사용하고자 하는 VPC의 <code>default</code> 시큐리티 그룹을 참조해야합니다.</p>
+<pre><code>data "aws_security_group" "default" {
+  name = "default"
+  id = "&lt;SECURITY_GROUP_ID&gt;"
+}</code></pre>
+</div>
+</div>
+<p>이제 인스턴스를 정의해보겠습니다. EC2 인스턴스를 정의하는 리소스는 <a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/instance.html"><code>aws_instance</code></a>입니다. 다음 내용을 맨 아래에 추가합니다.</p>
+<pre><code>resource "aws_instance" "web" {
+  ami = "ami-0a93a08544874b3b7" # amzn2-ami-hvm-2.0.20200207.1-x86_64-gp2
+  instance_type = "t2.micro"
+  key_name = aws_key_pair.web_admin.key_name
+  vpc_security_group_ids = [
+    aws_security_group.ssh.id,
+    data.aws_security_group.default.id
+  ]
+}</code></pre>
+<p>리소스 이름은 <code>web</code>으로 지정했습니다. AMI<sup>Amazon Machine Image</sup>는 AWS에서 기본적으로 제공하는 아마존 리눅스 2 이미지 최신 버전<span>*</span>인 <code>amzn2-ami-hvm-2.0.20200207.1-x86_64-gp2</code>를 사용합니다. HCL에서 <code>#</code> 뒤에 오는 문자열은 주석으로 무시됩니다. <code>instance_type</code>은 <code>t2.micro</code>로 지정했습니다.</p>
+<p><span>*</span> 이는 2020년 3월 현재 최신 AMI입니다. 아마존 리눅스 2 최신 AMI는 <a target="_blank" href="https://aws.amazon.com/amazon-linux-2/release-notes/">공식 릴리스 페이지</a>에서 확인할 수 있습니다. 다른 리전을 사용하는 경우 다른 리전의 AMI 값으로 변경해줍니다.</p>
+<p><code>key_name</code>에는 EC2 키 페어의 이름을 지정합니다. 앞서 정의한 <code>web_admin</code>을 문자열로 지정할 수도 있지만, 여기서는 변수를 사용해 앞서 정의한 <code>aws_key_pair.web_admin</code> 리소스의 <code>key_name</code>이라는 속성을 참조하는 방식을 사용했습니다.</p>
+<p>여기에는 두 가지 이유가 있습니다. 첫 번째 이유는 어떤 리소스를 정의할 때 다른 리소스들의 속성을 참조할 수 있음으로 보여주기 위해서입니다. 두 번째 이유가 더 중요합니다. 어떤 리소스(B 리소스)에서 다른 리소스(A 리소스)의 속성을 참조하면, 두 리소스 간에 간접적 의존 관계가 생깁니다. 즉, B 리소스는 A 리소스에 의존적이 됩니다. 테라폼은 (소스코드의 순서가 아니라) 그래프 모델로 이러한 의존 관계를 정의하고 리소스를 생성할 순서를 결정합니다. 따라서 위와 같이 정의한 경우 테라폼은 <code>aws_key_pair.web_admin</code> 리소스가 <code>aws_instance.web</code> 리소스보다 먼저 생성 되는 것을 보장해줍니다.</p>
+<p>마지막으로 <code>vpc_security_group_ids</code>를 지정합니다. 이 값은 배열로 지정합니다. 첫 번째 값은 앞서 생성한 <code>ssh</code> 시큐리티 그룹의 <code>id</code> 속성을 참조합니다. 두 번째 값은 역시 앞서 정의한 <code>default</code> 데이터 소스의 <code>id</code> 속성을 참조합니다. 데이터 소스를 참조하는 방법은 기본적으로 리소스를 참조하는 방법과 같습니다만, 앞에 <code>data.</code>을 붙여주어야 합니다.</p>
+<p>이제 <code>terraform plan</code>을 실행합니다. <code>aws_instance.web</code> 리소스를 추가할 것이라는 계획을 보여줍니다.</p>
+<pre><code>$ terraform plan
+  + resource "aws_instance" "web" {
+      + ami                          = "ami-0a93a08544874b3b7"
+      + arn                          = (known after apply)
+      + associate_public_ip_address  = (known after apply)
+      + availability_zone            = (known after apply)
+Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+<p>바로 적용해보겠습니다. EC2 인스턴스 생성에는 20초~1분 정도의 시간이 소요됩니다.</p>
+<pre><code>$ terraform apply
+data.aws_security_group.default: Refreshing state...
+aws_key_pair.web_admin: Refreshing state... [id=web_admin]
+aws_security_group.ssh: Refreshing state... [id=sg-0d07f25b19f3bdb5a]
+...
+  # aws_instance.web will be created
+  + resource "aws_instance" "web" {
+      + ami                          = "ami-0a93a08544874b3b7"
+      + arn                          = (known after apply)
+      + associate_public_ip_address  = (known after apply)
+      + availability_zone            = (known after apply)
+...
+aws_instance.web: Creating...
+aws_instance.web: Still creating... [10s elapsed]
+aws_instance.web: Still creating... [20s elapsed]
+aws_instance.web: Creation complete after 21s [id=i-066207312757476b7]
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</code></pre>
+<p>리소스 생성이 완료 되었다면 웹 콘솔에서도 확인할 수 있습니다. 출력된 인스턴스 ID으로 검색해봅니다.<span>*</span></p>
+<p><span>*</span> 위의 예제에서는 <code>i-066207312757476b7</code>. 실행 결과는 매번 다릅니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/e58/e583be23c3d910e7aa16c0e73fba0e0a6d0cca0d906bef580c5fdaa9ea154108.m.png" alt="웹 콘솔에서 테라폼으로 생성한 EC2 인스턴스를 확인" />
+</figure>
+<p>정상적으로 인스턴스가 생성되었음을 확인할 수 있습니다. <code>terraform console</code>을 실행하면 대화형 콘솔에서 생성된 리소스의 속성을 확인해볼 수 있습니다. SSH 접속을 위해 <code>aws_instance.web.public_ip</code>를 조회해봅니다.</p>
+<pre><code>$ terraform console
+&gt; aws_instance.web.public_ip
+13.124.222.81</code></pre>
+<p>SSH로 출력된 IP에 접속합니다.<span>*</span> <code>-i</code> 옵션에는 앞서 생성한 비밀키 경로를 지정해줍니다. 로그인 아이디에는 아마존 리눅스의 기본 유저인 <code>ec2-user</code>를 사용합니다.</p>
+<p><span>*</span> 직접 실행해서 출력된 IP로 대체해야합니다.</p>
+<pre><code>$ ssh -i ~/.ssh/web_admin ec2-user@13.124.222.81
+The authenticity of host '13.124.222.81 (13.124.222.81)' can't be established.
+ECDSA key fingerprint is SHA256:48eSPznWLvWIuFkUsdudCsLJCGHIMPxHYOxq72bqdGc.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '13.124.222.81' (ECDSA) to the list of known hosts.
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+https://aws.amazon.com/amazon-linux-2/
+1 package(s) needed for security, out of 32 available
+Run "sudo yum update" to apply all updates.
+[ec2-user@ip-172-31-27-50 ~]$</code></pre>
+<p>정상적으로 SSH에 접속이 가능한 것을 확인할 수 있습니다.</p>
+<div>
+<p>
+테라폼 0.11과 0.12의 문자열 보간
+</p>
+<div>
+<p>테라폼 0.11과 0.12에서 가장 크게 달라진 점 중 하나가 단순히 다른 리소스의 속성을 참조할 때 문자열 보간을 할 필요가 없다는 점입니다. 예를 들어 0.11에서는 인스턴스를 정의하면서 key_name을 참조할 때 다음과 같이 문자열을 사용해야했습니다.</p>
+<pre><code>resource "aws_instance" "web" {
+  ...
+  key_name = "${aws_key_pair.web_admin.key_name}"
+  ...
+}</code></pre>
+<p>여기서는 <code>${}</code>는 프로그래밍 언어에서 문자열 보간<sup>String Interpolation</sup>이라고 부르는 문법입니다. 중괄호 사이에 있는 코드를 실행한 반환값을 문자열 중간에 삽입해줍니다. 하지만 0.12부터 단순히 다른 리소스의 속성값을 참조하는 경우 문자열 보간을 사용하지 않아도 됩니다. 따라서 다음과 같이 작성할 수 있습니다.</p>
+<pre><code>resource "aws_instance" "web" {
+  key_name = aws_key_pair.web_admin.key_name
+}</code></pre>
+<p>훨씬 깔끔하죠? 이전 방식으로 작성하더라도 코드는 동작합니다만, 단순히 속성값일 참조할 때 문자열 보간을 사용하는 방식은 비추천 상태이므로 아래 방식으로 작성하는 것을 추천합니다. 0.12에서도 문자열을 연결하기 위한 경우에는 여전히 예전 방식으로 문자열 보간을 사용합니다.</p>
+<p>더 자세한 0.12의 변경 사항에 대해서는 <a target="_blank" href="https://www.44bits.io/ko/post/preview-new-feature-of-terraform-012-beta-1">테라폼(Terraform) 0.12 베타 1 출시 및 개선된 HCL 문법 살펴보기</a>를 참고해주세요.</p>
+</div>
+</div>
+<h3 id="네-번째-이터레이션-rds-인스턴스-정의">네 번째 이터레이션: RDS 인스턴스 정의</h3>
+<p>웹 서비스 실행을 위한 마지막 리소스입니다. 이번에는 AWS가 직접 관리해주는 데이터베이스 서비스 RDS의 MySQL 리소스를 생성해보겠습니다. 다음 내용을 추가합니다.</p>
+<pre><code>resource "aws_db_instance" "web_db" {
+  allocated_storage = 8
+  engine = "mysql"
+  engine_version = "5.6.35"
+  instance_class = "db.t2.micro"
+  username = "admin"
+  password = "&lt;DB_PASSWORD&gt;"
+  skip_final_snapshot = true
+}</code></pre>
+<p>RDS 인스턴스 리소스는 <a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/db_instance.html"><code>aws_db_instance</code></a>입니다. 이름은 <code>web_db</code>로 지정했습니다. 위에서 지정한 각 속성의 의미는 다음과 같습니다.</p>
+<dl>
+<code>allocated_storage</code>
+<dd>할당할 용량(기가바이트 단위)
+</dd>
+<code>engine</code>
+<dd>데이터베이스 엔진
+</dd>
+<code>engine_version</code>
+<dd>사용할 데이터베이스 엔진 버전
+</dd>
+<code>instance_class</code>
+<dd>인스턴스 타입(RDS 인스턴스 타입만 사용 가능)
+</dd>
+<code>username</code>
+<dd>계정 이름
+</dd>
+<code>password</code>
+<dd>암호. <code>&lt;DB_PASSWORD&gt;</code>는 자신이 사용할 값으로 적절히 변경해줍니다. 이 암호는 tfstate 파일에 저장되므로 임시로 사용할 것을 권장합니다. 데이터베이스에 접속해서 직접 실제 사용할 값을 변경해주세요.
+</dd>
+<code>skip_final_snapshot</code>
+<dd>인스턴스 제거 시 최종 스냅샷을 만들지 않고 제거할 지를 결정합니다. 기본값은 <code>false</code>입니다. 단, 이 경우 테라폼에서 인스턴스 삭제가 어려우므로, 여기서는 <code>true</code>를 지정해줍니다.
+</dd>
+</dl>
+<p>레퍼런스 매뉴얼을 보더라도 속성에 어떤 값을 지정해야할 지 알기 어려운 경우도 있습니다. 예를 들어 사용가능한 <code>engine_version</code> 속성은 어떻게 확인해야할까요. 웹 콘솔의 RDS 메뉴에서, MySQL 생성 메뉴에 들어가보는 것이 정확합니다. 엔진 버전을 지정하는 셀렉트 박스를 열어보면 현재 사용가능한 엔진의 버전을 확인할 수 있습니다.</p>
+<p>이러한 과정이 불필요하고 번거롭게 느껴질지도 모릅니다. 엄밀히 말해 테라폼은 이러한 과정을 대체하기 위한 도구가 아닙니다. 테라폼은 프로비저닝을 위한 이상적인 상태를 파일로 선언하기 위한 도구라고 생각하는 게 좋습니다. 적절한 방법으로 사용가능한 속성 값을 찾아서 채워주어야 합니다.</p>
+<p><code>plan</code> 명령어를 실행해봅니다.</p>
+<pre><code>$ terraform plan
+...
+  # aws_db_instance.web_db will be created
+  + resource "aws_db_instance" "web_db" {
+      + address                               = (known after apply)
+      + allocated_storage                     = 8
+      + apply_immediately                     = (known after apply)
+      + arn                                   = (known after apply)
+      + auto_minor_version_upgrade            = true
+      ...
+Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+<p>하나의 <code>aws_db_instance</code>를 추가할 것이라는 계획을 보여줍니다. 바로 적용합니다.</p>
+<pre><code>$ terraform apply
+  + resource "aws_db_instance" "web_db" {
+      + address                               = (known after apply)
+      + allocated_storage                     = 8
+      + apply_immediately                     = (known after apply)
+  ...
+aws_db_instance.web_db: Still creating... [3m10s elapsed]
+aws_db_instance.web_db: Still creating... [3m20s elapsed]
+aws_db_instance.web_db: Still creating... [3m30s elapsed]
+aws_db_instance.web_db: Creation complete after 3m36s [id=terraform-20200314034004585700000001]
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</code></pre>
+<p>RDS 생성에는 3~5분 정도 시간이 걸립니다. RDS 인스턴스가 생성되고 나면, 이번에는 <code>terraform console</code>에서 데이터베이스의 <code>endpoint</code> 속성을 확인합니다.</p>
+<pre><code>$ terraform console
+&gt; aws_db_instance.web_db.endpoint
+terraform-009ef698a81157df21254b7c4d.crl9efu8steh.ap-northeast-2.rds.amazonaws.com:3306</code></pre>
+<p>그럼 이제 이 주소로 접속해보겠습니다. 먼저 앞서 생성한 EC2 인스턴스로 접속하고, mysql을 설치합니다.</p>
+<pre><code>$ ssh -i ~/.ssh/web_admin ec2-user@13.124.222.81
+$ sudo yum install -y mysql
+...</code></pre>
+<p>MySQL 클라이언트 설치가 완료되었으면, 위에서 출력한 엔드포인트로 접속해봅니다.</p>
+<pre><code>$ mysql -h terraform-009ef698a81157df21254b7c4d.crl9efu8steh.ap-northeast-2.rds.amazonaws.com -u admin -p
+Enter password:
+...
+mysql&gt;</code></pre>
+<p>정상적으로 MySQL 서버에 접속이 되면 성공입니다.</p>
+<p>여기까지 테라폼을 사용해 웹 서비스를 배포할 EC2 인스턴스와 RDS 인스턴스를 생성해보았습니다. 즉, 웹 서비스 배포를 위한 준비가 모두 끝났습니다. 이제 프로비저닝 EC2 인스턴스에서 웹 서비스 실행을 위한 라이브러리를 설치하고, RDS 접속 정보를 추가해 애플리케이션을 배포하기만 하면 됩니다.</p>
+<h2 id="최종-테라폼-프로젝트-소스-코드">최종 테라폼 프로젝트 소스 코드</h2>
+<p>여기까지 50줄 남짓한 테라폼 정의 파일을 작성해보았습니다. 아래는 <code>provider.tf</code> 소스 코드입니다.</p>
+<pre><code>provider "aws" {
+  access_key = "&lt;AWS_ACCESS_KEY&gt;"
+  secret_key = "&lt;AWS_SECRET_KEY&gt;"
+  region = "ap-northeast-2"
+}</code></pre>
+<p>아래는 <code>web_infra.tf</code> 소스코드입니다.</p>
+<pre><code>resource "aws_key_pair" "web_admin" {
+  key_name = "web_admin"
+  public_key = file("~/.ssh/web_admin.pub")
+}
+resource "aws_security_group" "ssh" {
+  name = "allow_ssh_from_all"
+  description = "Allow SSH port from all"
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+data "aws_security_group" "default" {
+  name = "default"
+}
+resource "aws_instance" "web" {
+  ami = "ami-0a93a08544874b3b7" # amzn2-ami-hvm-2.0.20200207.1-x86_64-gp2
+  instance_type = "t2.micro"
+  key_name = aws_key_pair.web_admin.key_name
+  vpc_security_group_ids = [
+    aws_security_group.ssh.id,
+    data.aws_security_group.default.id
+  ]
+}
+resource "aws_db_instance" "web_db" {
+  allocated_storage = 8
+  engine = "mysql"
+  engine_version = "5.6.35"
+  instance_class = "db.t2.micro"
+  username = "admin"
+  password = "&lt;DB_PASSWORD&gt;"
+  skip_final_snapshot = true
+}</code></pre>
+<h2 id="프로비저닝된-인프라스트럭처-일괄-종료">프로비저닝된 인프라스트럭처 일괄 종료</h2>
+<p>테라폼의 장점은 단순히 코드로 인프라를 생성하는 데만 있지는 않습니다. 생성한 인프라 전체를 한 번에 종료하는 기능도 지원합니다. 이해를 돕기 위해 잠시 <code>web_infra.tf</code>을 다른 곳으로 옮겨두겠습니다.</p>
+<pre><code>$ mv web_infra.tf /tmp/</code></pre>
+<p>즉, 프로젝트 디렉터리에는 <code>provider.tf</code>만 남아있는 상태입니다. 이 상태에서 <code>terraform plan</code>을 실행하면 어떻게 될까요? 잠시 상상해보신 후 실제 결과를 확인해보시기 바랍니다.</p>
+<pre><code>$ terraform plan
+...
+  - resource "aws_db_instance" "web_db" {
+...
+  - resource "aws_instance" "web" {
+...
+  - resource "aws_key_pair" "web_admin" {
+...
+  - resource "aws_security_group" "ssh" {
+Plan: 0 to add, 0 to change, 4 to destroy.</code></pre>
+<p><code>+</code>와 반대로 <code>-</code>는 어떤 리소스를 삭제한다는 의미입니다. 테라폼은 모든 리소스를 삭제할 거라는 계획을 보여줍니다. 이유는 간단합니다. 이상적인 상태에 리소스가 없기 때문에, 실제로 생성되어 있는 리소스들을 제거하려고 하는 것입니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/0f5/0f5dac3503a4c574ca8ad71ef4be4b07fa36923cad296a78bca861b72d0bb631.m.png" alt="리소스 정의는 없지만, 실제로는 리소스가 생성되어 있는 상태" />
+</figure>
+<p>이제 다시 <code>web_infra.tf</code> 파일을 복사해옵니다.</p>
+<pre><code>$ mv /tmp/web_infra.tf .</code></pre>
+<p>이 상태에서 <code>plan</code>을 실행하면, <code>No changes</code>가 출력 됩니다.</p>
+<p>테라폼은 리소스 정의 파일을 프로젝트에서 제거하지 않고도 리소스가 아무것도 없는 상태에서 <code>plan</code>을 실행해볼 수 있는 옵션을 지원합니다. <code>plan</code>에 <code>-destroy</code> 옵션을 붙여서 실행해봅니다.</p>
+<pre><code>$ terraform plan -destroy
+...
+  - resource "aws_db_instance" "web_db" {
+...
+  - resource "aws_instance" "web" {
+...
+  - resource "aws_key_pair" "web_admin" {
+...
+  - resource "aws_security_group" "ssh" {
+Plan: 0 to add, 0 to change, 4 to destroy.</code></pre>
+<p>앞에서 리소스 정의 파일을 제외시키고 plan한 것과 같은 결과를 얻을 수 있습니다. 이 계획을 적용하려면 <code>terraform destroy</code> 명령어를 실행합니다.</p>
+<pre><code>$ terraform destroy
+...
+  - resource "aws_db_instance" "web_db" {
+...
+  - resource "aws_instance" "web" {
+...
+  - resource "aws_key_pair" "web_admin" {
+...
+  - resource "aws_security_group" "ssh" {
+Plan: 0 to add, 0 to change, 4 to destroy.
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+  Enter a value: yes</code></pre>
+<p>정확히 <code>yes</code>라고 입력하고 엔터를 누르면 지금까지 생성한 리소스들을 전부 제거합니다. 웹 콘솔에서도 정말 리소스들이 삭제되었는지 확인해보시기 바랍니다.</p>
+<h2 id="모든-리소스-다시-프로비저닝하기">모든 리소스 다시 프로비저닝하기</h2>
+<p>모든 리소스를 삭제했지만, 리소스 정의 파일은 그대로 남아있습니다. 즉, 앞서 생성했던 인프라스트럭처를 그대로 재현할 수 있습니다. 현재 상태는 아래 그림과 같습니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/1ea/1ea196989d3180814502db1d033e482d630e0c1662975a9d1d3dadda4cca0a1c.m.png" alt="모든 리소스가 정의되어 있고, 아직 생성은 되지 않은 상태" />
+</figure>
+<p>반드시 <code>plan</code>부터 실행해서 계획을 확인합니다.</p>
+<pre><code>$ terraform plan
+...
+  + resource "aws_db_instance" "web_db" {
+...
+  + resource "aws_instance" "web" {
+...
+  + resource "aws_key_pair" "web_admin" {
+...
+  + resource "aws_security_group" "ssh" {
+Plan: 4 to add, 0 to change, 0 to destroy.</code></pre>
+<p>4개의 리소스가 생성될 계획입니다. 바로 <code>apply</code>해서 리소스를 생성해봅니다.</p>
+<pre><code>$ terraform apply
+...
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.</code></pre>
+<p>4개의 리소스가 성공적으로 생성되면 아래 그림과 같은 상태가 됩니다.</p>
+<figure>
+<img src="https://d2uleea4buiacg.cloudfront.net/files/439/4392239c7b764089c761b40e0e764df937aaab295edecfc1c1def036abcd0696.m.png" alt="정의된 모든 리소스가 한 번에 생성된 상태" />
+</figure>
+<p>이렇게 테라폼을 사용하면 <code>plan</code>, <code>apply</code>, <code>destroy</code>를 반복하면서 큰 부담 없이 인프라를 생성하고 삭제하면서 점진적으로 구성해나갈 수 있습니다. 그리고 최종적으로 구성된 결과는, 마지막에 확인한 것처럼 쉽게 삭제하거나 복원할 수 있습니다. Infrastructure as Code의 강력한 장점 중 하나라고 할 수 있습니다.</p>
+<h2 id="마치며-테라폼을-사용하는-이유">마치며: 테라폼을 사용하는 이유</h2>
+<p>여기까지 테라폼으로 AWS 리소스들을 정의하고 프로비저닝하는 방법에 대해서 알아보았습니다. 웹 콘솔을 사용해 리소스를 관리하는 것과는 많이 다릅니다. 여기서는 정말 간단한 사례를 구현해보았지만, 그럼에도 불구하고 생각보다 간단하지는 않습니다. 프로젝트에서 테라폼을 사용해보면 매번 리소스 레퍼런스를 확인하고, 웹 콘솔과 비교해보는 과정을 계속해서 반복해야합니다. 어떤 면에서는 웹 콘솔보다 오히려 어렵고 귀찮습니다.</p>
+<p>그럼에도 테라폼을 사용하면 좋은 점들이 있습니다. 먼저 웹 콘솔을 사용해 리소스들을 관리하면서 점차 리소스가 많아지기 시작하면 더 이상 전체 리소스를 파악할 수 없는 시점이 옵니다. 업무용으로 사용하는 경우 명시적인 리소스와 비명시적인 리소스를 포함해 수백 수천개의 리소스를 다루는 일이 일반적입니다. 언제 왜 만들었는지 알 수 없는 리소스들이 점점 쌓여나가고, 레거시로 남습니다. 테라폼을 사용하면 프로비저닝하고자 하는 상태를 코드로 명확히 기록해두기 때문에 웹 콘솔만 사용할 때보다 파악이 쉬워지고 세심한 관리가 가능해집니다.</p>
+<p>또한 테라폼은 코드로서의 인프라스터럭처<sup>Infrastructure as Code</sup>를 지향하는 도구로서, 코드를 작성할 때 누리던 생태계의 이점을 그대로 이용할 수 있습니다. 저장소에서 이력 추적을 할 수도 있고, 깃허브<sup>Github</sup>에서 팀원들과 코드 리뷰를 진행할 수도 있습니다. 이 과정에서 누가 어떤 리소스를 왜 추가했는지, 투명성은 자동적으로 얻어집니다. 좀 더 잘 활용한다면 CI를 사용해 코드 리뷰가 된 사항을 자동적으로 플랜 및 적용하는 것도 가능합니다.</p>
+<p>마지막으로, 연습용으로 만든 리소스들은 삭제하는 걸 잊지 마시기 바랍니다.</p>
+<pre><code>$ terraform destroy</code></pre>
+<h2 id="더-읽을거리">더 읽을거리</h2>
+<h3 id="테라폼-공식-문서">테라폼 공식 문서</h3>
+<ul>
+<li><a target="_blank" href="https://www.terraform.io/docs/index.html">테라폼 공식 문서</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/commands/plan.html">테라폼 명령어 - plan</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/commands/apply.html">테라폼 명령어 - apply</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/commands/console.html">테라폼 명령어 - console</a></li>
+</ul>
+<h3 id="테라폼---aws-프로바이더-레퍼런스">테라폼 - AWS 프로바이더 레퍼런스</h3>
+<ul>
+<li><a target="_blank" href="https://www.terraform.io/docs/providers/aws/">AWS 프로바이더: aws</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/key_pair.html">AWS 리소스: aws_key_pair</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/providers/aws/d/security_group.html">AWS 데이터 소스: aws_security_group</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/security_group.html">AWS 리소스: aws_security_group</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/instance.html">AWS 리소스: aws_instance</a></li>
+<li><a target="_blank" href="https://www.terraform.io/docs/providers/aws/r/db_instance.html">AWS 리소스: aws_db_instance</a></li>
+</ul>
+<h3 id="테라폼을-소개한-한국어-문서">테라폼을 소개한 한국어 문서</h3>
+<ul>
+<li><a target="_blank" href="https://blog.outsider.ne.kr/1259">Outsider’s Dev Story - Terraform에 대해서…</a></li>
+<li><a target="_blank" href="https://mooyoul.github.io/2016/12/19/Terraform-101/">init 1 - Terraform 101</a></li>
+<li><a target="_blank" href="https://rampart81.github.io/post/what-is-terraform/">송은우의 언어들 - Terraform 소개</a></li>
+</ul>
+      </div>
