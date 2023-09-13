@@ -1,0 +1,93 @@
+<div><p><img src="https://blog.kakaocdn.net/dn/dafRcF/btriBBQsud1/c4NSSuOcjU0LPkq6qrKick/img.jpg" alt="java" /></p>
+<p>오늘 교보에서 주문한 <a target="_blank" href="https://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791161755748">단위 테스트</a> 책을 받았다.</p>
+<p><img src="https://blog.kakaocdn.net/dn/ec68F9/btriFjHU0vC/0UZN96pbR4KUuzfBz1TZWK/img.png" alt="unittest" /></p>
+<p><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788960771253&amp;orderClick=LAG&amp;Kc=#N">Xunit 테스트 패턴 책</a> (번역이 나와 맞지 않았다ㅠ) 이후에 테스트와 관련해서는 되게 오랫만에 본 재밌는 책이여서 이건 우리팀 위키에 정리해서 공유해야겠다는 생각이 들었다.</p>
+<p>이 생각으로 최근의 채용 과정을 떠오르게되니 조금 우울해졌다.</p>
+<p>과제형 프로젝트를 채용 과제로 삼으면서 많은 분들의 프로젝트 결과물도 보고, 관련해서 면접도 본다.</p>
+<p>면접에서 과제에 대한 코드리뷰를 하다보면 지원자분들이 항상 물어보는게 있다.</p>
+<p>"피드백 주신 그걸 좀 더 깊게 배우려면 어떤 책이나 영상을 보면 되나요?"</p>
+<p>이 질문을 항상 받는데, 대답해주기가 애매하다.<br />왜냐면 우리나라의 대부분의 좋은 개발 컨텐츠가 <b>Java</b>를 기반으로 나왔기 때문이다.</p>
+<p>(우리 회사는 NodeJS이고, 지원자분 역시 대부분은 NodeJS만 해보신 분들이다.)</p>
+<p>예를 들어, 테스트 코드가 미흡하신 분께 테스트 코드와 관련해서 피드백을 드릴려고 하면 추천해드릴 NodeJS 컨텐츠가 거의 없다.</p>
+<p>짧은 블로그 컨텐츠 (이것도 틀린 내용이 꽤나 많은), 혹은 E2E 테스트만 있는 컨텐츠 등 뿐이다.</p>
+<p>반면에 Java (혹은 C#) 를 보면 정말 양질의 컨텐츠들이 있다.</p>
+<p>먼저 책을 보면</p>
+<ul>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791161755748&amp;orderClick=LEa&amp;Kc=">단위 테스트</a>
+<ul>
+<li>최근에 나왔고, C# 인데 책 서두에서도 얘기하지만 자바 / C++ 문법을 안다면 충분히 이해할 수 있다.</li>
+</ul>
+</li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788960771253&amp;orderClick=LAG&amp;Kc=#N">Xunit 테스트 패턴</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788968480621&amp;orderClick=LAG&amp;Kc=">Effective Unit Testing</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788966261024&amp;orderClick=LAG&amp;Kc=">테스트 주도 개발</a>
+<ul>
+<li>예제코드가 파이썬과 자바가 챕터별로 나눠져있지만</li>
+</ul>
+</li>
+</ul>
+<p>등이 번역되어 나왔다.</p>
+<p>영상은 또 어떨까?</p>
+<ul>
+<li>패스트캠퍼스의 The Red 시리즈
+<ul>
+<li><a target="_blank" href="https://fastcampus.co.kr/dev_red_ygw">이규원님 강좌</a> (Java / C# / JS 예제코드가 섞여있다.)</li>
+<li><a target="_blank" href="https://fastcampus.co.kr/dev_red_bcr">최범균님/백명석님 강좌</a></li>
+</ul>
+</li>
+<li>오랫동안 사랑 받은 클린 코드 &amp; TDD 유튜브 영상인 <a target="_blank" href="https://www.youtube.com/watch?v=60lLSe1phks">백명석님의 클린 코더스</a></li>
+<li>인프런의 <a target="_blank" href="https://www.inflearn.com/users/@yh">영한님</a> / <a target="_blank" href="https://www.inflearn.com/users/@whiteship">기선님</a> 강의
+<ul>
+<li>모두 테스트 코드를 기반으로 설명한다.</li>
+<li>단순하게 API E2E 테스트로 설명하는 식이 아니다.</li>
+</ul>
+</li>
+</ul>
+<p>책 / 영상 외에도 코드리뷰 기반으로 클린코드와 TDD를 교육해주는 <a target="_blank" href="https://edu.nextstep.camp/">박재성님의 Next Step</a> 이 또한 든든하게 버티고 있다.</p>
+<p>이 외에도 다양하고, 퀄리티가 뛰어난 컨텐츠는 넘친다 (C# 도 섞여있지만)</p>
+<ul>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791158390174&amp;orderClick=LAG&amp;Kc=">엔터프라이즈 애플리케이션 아키텍처 패턴</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791158391409&amp;orderClick=LAG&amp;Kc=">오브젝트</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791185890852&amp;orderClick=LEa&amp;Kc=">클린 소프트웨어</a> / <a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788966262472&amp;orderClick=LAG&amp;Kc=">클린 아키텍처</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791161752075&amp;orderClick=LAG&amp;Kc=">레거시 코드 활용 전략</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788992939850&amp;orderClick=LAG&amp;Kc=">도메인 주도 설계</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9791196203733&amp;orderClick=LAG&amp;Kc=">클라우드 네이티브 자바</a></li>
+<li><a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788960773431&amp;orderClick=LEa&amp;Kc=">토비의 스프링</a> / <a target="_blank" href="http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;mallGb=KOR&amp;barcode=9788960777330&amp;orderClick=LAG&amp;Kc=">자바 ORM 표준 JPA 프로그래밍</a>
+<ul>
+<li>java 생태계의 책이지만, 실무 코드를 제외한 배경과 코어 설명은 정말 모든 개발자들이 보면 좋다고 생각한다</li>
+</ul>
+</li>
+</ul>
+<p>이러다보니, 지원자분들의 질문에 Java 컨텐츠를 소개할 수 밖에 없다.<br />(내가 Java 컨텐츠를 추천하다면 NodeJS 지원자들은 무슨 생각을 할까?)</p>
+<p>요즘의 웹 애플리케이션 개발에서는 위에서 언급한 지식들을 몰라도 원하는대로 작동하는 웹 애플리케이션을 만드는데는 큰 어려움이 없다.</p>
+<p>근데 그 다음이 문제다.</p>
+<p>그 다음 레벨로 가기 위해서 쌓아야할 지식들이 <b>한국 내에서는 Java / C# 기반으로 된 컨텐츠가 대다수다</b>.</p>
+<p>출판사분들이 가져오는 번역책들 역시 대부분 JVM 기반의 서적들이다.</p>
+<p>그러다보니 좋은 시니어를 만난 사람과 아닌 사람간의 격차가 심하게 나타난다.</p>
+<p>특히 우리같이 작은 회사에서는 신규 입사자가 올때 마땅히 추천해드릴게 없어서 <b>모든걸 사내 온보딩과 위키문서만으로 기술 격차를 해소</b>해야만 한다.</p>
+<p>이건 정제된 지식 뿐만 아니라, 실무 노하우에서도 차이가 난다.</p>
+<ul>
+<li>네이버의 D2</li>
+<li>카카오의 ifkakao</li>
+<li>쿠팡의 Reveal</li>
+<li>배민의 Woowacon</li>
+<li>토스의 Slash</li>
+</ul>
+<p>매일 수천만 트래픽을 받는 회사들이 <b>매년 컨퍼런스와 기술 블로그에서 자신들이 해결한 노하우를 끊임없이 쏟아낸다</b>.</p>
+<p>이와 반대로, 최근의 모 부트캠프에서는 NodeJS 백엔드 리뷰어가 없어서 <b>프론트엔드 리뷰어분들이 NodeJS 백엔드 멘티생들을 코드리뷰</b> 해줬다는 웃픈 이야기도 들린다.</p>
+<p>우리 회사가 노력한다한들, <b>우리나라 IT회사 1~10위의 회사들이 매일 쏟아내는 노하우보다 더 나을 수 있을까?</b><br />그게 합리적인 선택일까?</p>
+<p>그냥 Java를 배워서 Node에 잘 녹여내는걸 가이드 하는게 어떨까? 라는 생각이 들었다.</p>
+<p><b>좋은 아키텍처 / 코드 디자인 / 레거시 리팩토링 / 도메인 개발 / 테스트코드 등등의 지식들은 레벨이 오를수록 무시할 수 없다</b>.</p>
+<p>그러다보니 요즘은 팀 분들께 "<b>Java와 스프링을 사용하진 않더라도 최소한 사용법 정도는 배우는게 어떨까요?</b>" 라고 제시할까 고민한다.</p>
+<blockquote>
+<p>아직 이야기 한건 아니다</p>
+</blockquote>
+<p>그래야만 특정 누군가가 없더라도 국내의 좋은 자료들을 참고하여 좋은 지식과 노하우를 습득하고 이를 기반으로 계속해서 성장하기가 상대적으로 수월하기 때문이다.</p>
+<p>흔히들 <b>자바 공화국</b>이라고 얘기한다.</p>
+<p>공화국은 주권이 국민에게 있는 나라를 말한다.<br />군주제처럼 1인이 최고 권력을 가진게 아니라는 뜻이다.<br />개인의 독단이 아닌, 시민 사회의 합의에 의하여 통치되는 것이다.</p>
+<p>그런 점에서, 자바 공화국이 맞다.<br />자바는 국내의 수많은 개발자들이 생태계를 구축하고 지식을 전파하고 방향을 이야기하기 때문이다.</p>
+<p><b>특정 개인이 전파하는 지식은 절대 수많은 회사와 개발자들이 쏟아내는 지식보다 나을 수 없다</b>.</p>
+<blockquote>
+<p>물론 여기서의 자바 공화국 해석은 일반적인 해석과는 다르지만.</p>
+</blockquote>
+<p>Java 라는 언어가 좋고 말고를 떠나서,<br /><b>국내에서 백엔드 개발자가 좋은 지식들을 쌓기 위해서는</b> 최소한의 Java 코드를 볼 수준까지는 배워야하는건가 하는 생각이 요즘 쓸쓸하게 든다.</p></div>
