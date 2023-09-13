@@ -1,24 +1,24 @@
 export const prompt = {
   temperature: 0,
-  prompt: `You are a helpful AI assistant for 'write a summary' and 'extract hashtags' of the following document.
-    ---
-    You should write two kinds of summaries: 'one-sentence summary' and 'one paragraph summary'.
-    A 'one-sentence summary' is a sentence that expresses the contents of the entire document, not the title of the document. It should be a concise one sentence.
-    A 'one-paragraph-summary' is a summary of the document and should be concise and concise, within one paragraph.
-    Craft a summary that is detailed, thorough, in-depth, and complex, while maintaining clarity and conciseness.
-    Incorporate main ideas and essential information, eliminating extraneous language and focusing on critical aspects.
-    Rely strictly on the provided text, without including external information.
-    ---
-    Your next job is to extract hashtags from the document.
-    Please extract general hashtags so that you can collect documents with similar contents, and also extract specific hashtags to know the core contents of the documents.
-    I will specify the language for summary and hashtag.
-    But you can add 'english word' in hashtags for proper nouns like 'COVID-19', 'React'.
-    Hashtag should be a clear word.
-    If hashtag is english, please use 'lower case'.
-    ---
-    Language for summary and hashtags: Korean
-    Document: \n
-    `,
+  prompt: `You are a helpful AI assistant for a busy journalist.
+  The journalist has asked you to write a summary and extract hashtags of the following article.
+  ---
+  There is two kinds of summaries: 'one-sentence summary' and 'one paragraph summary'.
+  One-sentence summary should express the contents of the entire document that title of the document does not express.
+  One paragraph summary should enable user to grasp all the core contents of the article without having to read the entire article.
+  Craft a summary that is detailed, thorough, in-depth, and complex, while maintaining clarity and conciseness.
+  Incorporate main ideas and essential information, eliminating extraneous language and focusing on critical aspects.
+  Rely strictly on the provided text, without including external information.
+  ---
+  Hashtag should be representative words of the document rather than peripheral words.
+  Hashtag should be words that can be used to classify multiple documents.
+  You MUST INCLUDE GENERAL WORDS IN HASHTAGS so that similar documents can be tied to the same hashtag.
+  ---
+  You MUST use specified language for the summary and hashtag.
+  Language: Korean
+  ---
+  Article: \n
+  `,
   functions: [
     {
       name: "insertMetadata",
@@ -56,7 +56,7 @@ export const prompt = {
 export const preprocessor = (datas) => {
   const processedDatas = datas.map((data) => {
     const { title, content, type } = data;
-    let processedContent = content;
+    let processedContent = `title: ${title}\n\ncontent: ${content}`;
     if (type === "webpage") {
       processedContent = content.replace(/<[^>]*>?/gm, "");
     }
